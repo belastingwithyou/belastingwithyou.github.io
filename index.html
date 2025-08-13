@@ -35,23 +35,149 @@
             html {
                 scroll-behavior: smooth;
             }
+
+            .bottom-menu {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.85);
+                display: flex;
+                justify-content: space-around;
+                padding: 10px 0;
+                border-top: 2px solid #444;
+                z-index: 1000;
+                backdrop-filter: blur(5px); /* efek kaca */
+            }
+
+            .bottom-menu a {
+                color: white;
+                text-decoration: none;
+                font-size: 14px;
+                text-align: center;
+                flex: 1;
+            }
+
+            .bottom-menu a:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 6px;
+                padding: 5px 0;
+            }
+
+            .flayer {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                /* background: url('images/bg-flayer.jpg') center/cover no-repeat;  */
+                background: grey; /* Bisa ganti gambar background */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+                animation: fadeIn 0.5s ease-in-out;
+            }
+
+            .flayer::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: rgba(0,0,0,0.6); /* overlay gelap */
+            }
+
+            .flayer-content {
+                position: relative;
+                text-align: center;
+                color: white;
+                padding: 30px;
+                z-index: 1;
+            }
+
+            .flayer-content h1 {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+            .flayer-content h2 {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+            .flayer-content h3 {
+                font-size: 20px;
+                margin-top: 10px;
+            }
+
+            .flayer button {
+                margin-top: 25px;
+                padding: 12px 24px;
+                font-size: 16px;
+                border: none;
+                background: #ff4081;
+                color: white;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+
+            .flayer button:hover {
+                background: #e73370;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to   { opacity: 1; }
+            }
+
+            @keyframes fadeOut {
+                to { opacity: 0; visibility: hidden; }
+            }
+            #btn-music {
+                position: fixed;
+                bottom: 80px; /* di atas menu fixed */
+                right: 20px;
+                background: rgba(0,0,0,0.6);
+                color: white;
+                padding: 8px 10px;
+                border-radius: 50%;
+                font-size: 18px;
+                cursor: pointer;
+                z-index: 1001;
+                user-select: none;
+            }
+            #btn-music:hover {
+                background: rgba(0,0,0,0.8);
+            }
+
         </style>
     </head>
 
     <body>
-        <!-- Navbar STart -->
-        <header class="defaultscroll sticky">
-            <div class="container">
-                <!-- Logo container-->
-            </div><!--end container-->
-        </header><!--end header-->
-        <!-- Navbar End -->
+        <!-- Flayer Fullscreen -->
+        <div id="flayer" class="flayer">
+            <div class="flayer-content">
+                <h1>Undangan Pernikahan</h1>
+                <h2>Bayu & Abel</h2>
+                <p>Kepada Yth:</p>
+                <h3 id="nama-tamu">Bapak/Ibu Tamu Spesial</h3>
+                <button onclick="tutupFlayer()">Buka Undangan</button>
+            </div>
+        </div>
+
 
         <!-- Hero Start -->
-        <section class="bg-half-170 d-table w-100" style="background-color: black;" id="home">
+        <section class="bg-half-170 d-table w-100" style="background-color: black; height: 100vh; display: flex; align-items: center; justify-content: center;"  id="home">
             <div class="container">
                 <div class="align-items-center text-center">
                         <div class="title-heading">
+                            <h4 class="text-white">CIE NIKAH CIE</h4>
+                            <h4 class="heading text-white mb-3 title-dark">CIE ABEL NIKAH CIE</h4>
+                            <p class="text-white">CIE CIE CIE</p>
+                            <h4 class="text-white">CIE NIKAH CIE</h4>
+                            <h4 class="heading text-white mb-3 title-dark">CIE ABEL NIKAH CIE</h4>
+                            <p class="text-white">CIE CIE CIE</p>
+                            <h4 class="text-white">CIE NIKAH CIE</h4>
+                            <h4 class="heading text-white mb-3 title-dark">CIE ABEL NIKAH CIE</h4>
+                            <p class="text-white">CIE CIE CIE</p>
                             <h4 class="text-white">CIE NIKAH CIE</h4>
                             <h4 class="heading text-white mb-3 title-dark">CIE ABEL NIKAH CIE</h4>
                             <p class="text-white">CIE CIE CIE</p>
@@ -169,25 +295,73 @@
         </section><!--end section-->
 
         <!-- Back to top -->
-        <a href="#" onclick="topFunction()" id="back-to-top" class="btn btn-icon btn-primary back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
+        <!-- <a href="#" onclick="topFunction()" id="back-to-top" class="btn btn-icon btn-primary back-to-top"><i data-feather="arrow-up" class="icons"></i></a> -->
         <!-- Back to top -->
+        <!-- Fixed Bottom Menu -->
+        <nav class="bottom-menu">
+            <a href="#home">🏠 Home</a>
+            <a href="#surat">📜 Surat</a>
+            <a href="#undangan">💌 Undangan</a>
+            <a href="#acara">📅 Acara</a>
+        </nav>
 
-        
+        <div id="btn-music" onclick="toggleMusic()">
+            🔊
+        </div>
+        <footer>
+            <audio id="lagu" src="source/mantap.mp3" preload="auto"></audio>
 
-        <!-- javascript -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <!-- SLIDER -->
-        <script src="js/tiny-slider.js "></script>
-        <!-- tobii js -->
-        <script src="js/tobii.min.js "></script>
-        <!-- Icons -->
-        <script src="js/feather.min.js"></script>
-        <!-- Main Js -->
-        <script src="js/plugins.init.js"></script><!--Note: All init js like tiny slider, counter, countdown, maintenance, lightbox, gallery, swiper slider, aos animation etc.-->
-        <script src="js/app.js"></script><!--Note: All important javascript like page loader, menu, sticky menu, menu-toggler, one page menu etc. -->
-        <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+            <script>
+                const audio = document.getElementById('lagu');
+                const btnMusic = document.getElementById('btn-music');
+                // Fungsi toggle musik
+                function toggleMusic() {
+                    if (audio.paused) {
+                        audio.play();
+                        btnMusic.innerText = '🔊';
+                    } else {
+                        audio.pause();
+                        btnMusic.innerText = '🔇';
+                    }
+                }
+
+                function tutupFlayer() {
+                    const flayer = document.getElementById('flayer');
+                    const audio = document.getElementById('lagu');
+
+                    // Play lagu
+                    audio.play().catch(err => {
+                        console.log("Lagu tidak bisa diputar otomatis:", err);
+                    });
+
+                    // Animasi tutup flayer
+                    flayer.style.animation = "fadeOut 0.5s forwards";
+                    setTimeout(() => {
+                        flayer.style.display = "none";
+                    }, 500);
+                }
+
+                // Ambil parameter ?to=
+                const params = new URLSearchParams(window.location.search);
+                let rawNama = params.get('to') || '';
+                let nama = rawNama.trim() === '' ? 'Tamu Undangan' : rawNama.replace(/-/g, ' ');
+                document.getElementById('nama-tamu').innerText = nama;
+            </script>
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <!-- SLIDER -->
+            <script src="js/tiny-slider.js "></script>
+            <!-- tobii js -->
+            <script src="js/tobii.min.js "></script>
+            <!-- Icons -->
+            <script src="js/feather.min.js"></script>
+            <!-- Main Js -->
+            <script src="js/plugins.init.js"></script><!--Note: All init js like tiny slider, counter, countdown, maintenance, lightbox, gallery, swiper slider, aos animation etc.-->
+            <script src="js/app.js"></script><!--Note: All important javascript like page loader, menu, sticky menu, menu-toggler, one page menu etc. -->
+            <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+        </footer>
     </body>
 </html>
