@@ -71,3 +71,68 @@ function updateCountdown(){
 
 updateCountdown();
 const cdTimer = setInterval(updateCountdown, 1000);
+
+
+$(document).ready(function() {
+    const API_URL = "https://script.google.com/macros/s/AKfycbwzOx6d6xAbuBcjDOvoksi7vY1oyPgPIUF6-s4N99gkv3xWj8valFprNcEVRiBYkqJOVg/exec"; // ganti
+  
+  // klik tombol, bukan submit bawaan
+  $("#btnKirim").on("click", function() {
+    let formData = {
+      nama: $("#nama").val(),
+      hadir: $("#hadir").val(),
+      pesan: $("#pesan").val()
+    };
+
+    if (!formData.nama) {
+      alert("Nama wajib diisi!");
+      return;
+    }
+
+    $.ajax({
+      url: API_URL,
+      method: "POST",
+      data: formData,
+      success: function(res) {
+        $("#formPesan")[0].reset(); // reset form
+        loadPesan()
+      },
+      error: function(err) {
+        alert("Gagal mengirim pesan.");
+        console.error(err);
+      }
+    });
+  });
+
+  // Load awal
+  function loadPesan() {
+    $.getJSON(API_URL, function(data) {
+        let html = "";
+        let countHadir = 0;
+        let countTidak = 0;
+        data.reverse()
+        data.forEach(row => {
+            if (row.hadir === "Hadir") countHadir++;
+            if (row.hadir === "Tidak Hadir") countTidak++;
+
+            html += `
+            <div class="card mb-2">
+                <div class="card-body">
+                <h5 class="card-title">${row.nama} <small class="text-muted">(${row.hadir})</small></h5>
+                <p class="card-text"><em>${row.pesan}</em></p>
+                <small class="text-muted">${row.waktu}</small>
+                </div>
+            </div>
+            `;
+        });
+
+        $("#listPesan").html(html || "<p class='text-muted'>Belum ada pesan...</p>");
+
+        $("#countHadir").text(countHadir);
+        $("#countTidak").text(countTidak);
+        $("#countPesan").text(data.length);
+        });
+    }
+
+     loadPesan();
+});
