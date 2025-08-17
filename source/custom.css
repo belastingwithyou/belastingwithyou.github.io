@@ -109,3 +109,50 @@ html {
 #btn-music:hover {
     background: rgba(0,0,0,0.8);
 }
+
+section {
+  background-image: 
+    url('images/kiriatas.png'), /* kiri atas */
+    url('images/kananatas.png'), /* kanan atas */
+    url('images/kiribawah.png'), /* kiri bawah */
+    url('images/kananbawah.png'); /* kanan bawah */
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: top left, top right, bottom left, bottom right;
+  background-size: 120px 120px; 
+}
+
+.section-content{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.section-content-2{
+    margin-bottom: 100px;
+}
+
+.countdown {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.count-box {
+  background: black;
+  color: white;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 16px 14px;
+  min-width: 70px;       /* 👈 fix lebar biar nggak geser */
+  text-align: center;    /* angka di tengah */
+}
+
+.count-box .num {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.count-box .label {
+  font-size: 12px;
+  opacity: .8;
+}
