@@ -1,3 +1,9 @@
+
+const params = new URLSearchParams(window.location.search);
+let rawNama = params.get('to') || '';
+let nama = rawNama.trim() === '' ? 'Tamu Undangan' : rawNama.replace(/-/g, ' ');
+document.getElementById('nama-tamu').innerText = nama;
+
 function pad(n){ return String(n).padStart(2,'0'); }
 
  const TARGET_ISO = "2025-11-30T08:00:00+07:00";
