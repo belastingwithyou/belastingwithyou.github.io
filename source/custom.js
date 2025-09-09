@@ -1,38 +1,3 @@
-const audio = document.getElementById('lagu');
-const btnMusic = document.getElementById('btn-music');
-// Fungsi toggle musik
-function toggleMusic() {
-    if (audio.paused) {
-        audio.play();
-        btnMusic.innerText = '🔊';
-    } else {
-        audio.pause();
-        btnMusic.innerText = '🔇';
-    }
-}
-
-function tutupFlayer() {
-    const flayer = document.getElementById('flayer');
-    const audio = document.getElementById('lagu');
-
-    // Play lagu
-    audio.play().catch(err => {
-        console.log("Lagu tidak bisa diputar otomatis:", err);
-    });
-
-    // Animasi tutup flayer
-    flayer.style.animation = "fadeOut 0.5s forwards";
-    setTimeout(() => {
-        flayer.style.display = "none";
-    }, 500);
-}
-
-// Ambil parameter ?to=
-const params = new URLSearchParams(window.location.search);
-let rawNama = params.get('to') || '';
-let nama = rawNama.trim() === '' ? 'Tamu Undangan' : rawNama.replace(/-/g, ' ');
-document.getElementById('nama-tamu').innerText = nama;
-
 function pad(n){ return String(n).padStart(2,'0'); }
 
  const TARGET_ISO = "2025-11-30T08:00:00+07:00";
@@ -43,7 +8,7 @@ function pad(n){ return String(n).padStart(2,'0'); }
   }
 
   function updateCountdown() {
-    console.log('mantap')
+    // console.log('mantap')
     const target = new Date(TARGET_ISO).getTime();
     const now    = Date.now();
     let diff     = target - now;
@@ -82,34 +47,40 @@ function pad(n){ return String(n).padStart(2,'0'); }
 $(document).ready(function() {
     const API_URL = "https://script.google.com/macros/s/AKfycbwzOx6d6xAbuBcjDOvoksi7vY1oyPgPIUF6-s4N99gkv3xWj8valFprNcEVRiBYkqJOVg/exec"; // ganti
   
-  // klik tombol, bukan submit bawaan
-  $("#btnKirim").on("click", function() {
-    let formData = {
-      nama: $("#nama").val(),
-      hadir: $("#hadir").val(),
-      pesan: $("#pesan").val()
-    };
+  $(document).on("click", "#btnKirim", function () {
+    // taruh kode Ajax lo di sini
+      let $btn = $(this); // simpen button
+    $btn.prop("disabled", true).text("Mengirim..."); // disable + kasih indikator
+      let formData = {
+        nama: $("#nama").val(),
+        hadir: $("#hadir").val(),
+        pesan: $("#pesan").val()
+      };
 
-    if (!formData.nama) {
-      alert("Nama wajib diisi!");
+      if (!formData.nama) {
+        alert("Nama wajib diisi!");
+        $btn.prop("disabled", false).text("Kirim"); // enable lagi kalau gagal validasi
       return;
-    }
-
-    $.ajax({
-      url: API_URL,
-      method: "POST",
-      data: formData,
-      success: function(res) {
-        $("#formPesan")[0].reset(); // reset form
-        loadPesan()
-      },
-      error: function(err) {
-        alert("Gagal mengirim pesan.");
-        console.error(err);
       }
-    });
-  });
 
+      $.ajax({
+        url: API_URL,
+        method: "POST",
+        data: formData,
+        success: function(res) {
+          $("#formPesan")[0].reset(); // reset form
+          loadPesan()
+        },
+        error: function(err) {
+          alert("Gagal mengirim pesan.");
+          console.error(err);
+        },
+        complete: function () {
+          // complete selalu jalan, baik success/error
+          $btn.prop("disabled", false).text("Kirim");
+        }
+      });
+  });
   // Load awal
   function loadPesan() {
     $.getJSON(API_URL, function(data) {
