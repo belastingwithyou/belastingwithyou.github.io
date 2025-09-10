@@ -24,3 +24,19 @@
   font-size: 12px;
   opacity: .8;
 }
+
+ .collapsible {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+  }
+
+  .collapsible.open {
+    max-height: 500px; /* angka ini harus lebih besar dari tinggi konten */
+  }
+
+  .collapsible-content {
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 6px;
+  }

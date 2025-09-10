@@ -135,3 +135,30 @@ function timeAgo(isoString) {
     return `${days} hari yang lalu`;
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById('toggleBtn');
+  const collapsible = document.getElementById('collapsible');
+
+  btn.addEventListener('click', () => {
+    collapsible.classList.toggle('open');
+
+    if (collapsible.classList.contains('open')) {
+      collapsible.style.maxHeight = collapsible.scrollHeight + "px";
+    } else {
+      collapsible.style.maxHeight = "0px";
+    }
+  });
+});
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert("No. Rekening berhasil disalin: " + text);
+  });
+}
+
+function copyToClipboard2(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Alamat berhasil disalin: " + text);
+  });
+}
