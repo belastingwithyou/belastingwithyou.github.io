@@ -162,3 +162,8 @@ function copyToClipboard2(text) {
     alert("Alamat berhasil disalin: " + text);
   });
 }
+
+window.addEventListener("load", function() {
+  const music = document.getElementById("music");
+  music.play().catch(e => console.log("Autoplay gagal:", e));
+});
