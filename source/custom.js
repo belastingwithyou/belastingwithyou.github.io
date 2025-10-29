@@ -101,9 +101,9 @@ $(document).ready(function() {
             html += `
             <div class="card mb-2">
                 <div class="card-body">
-                <b class="card-title">${row.nama}</b>
-                <span><em>`+timeAgo(row.waktu)+`<em></span>
-                <p class="card-text">${row.pesan}</p>
+                <b class="card-title">${row.nama}</b><br>
+                <span class="card-text">${row.pesan}</span><br>
+                <span style="font-size: 11px;"><em>`+timeAgo(row.waktu)+`<em></span>
                 </div>
             </div>
             `;
