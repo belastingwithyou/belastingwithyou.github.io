@@ -1,8 +1,29 @@
+// Ambil seluruh query string tanpa '?'
+let query = window.location.search.substring(1);
 
-const params = new URLSearchParams(window.location.search);
-let rawNama = params.get('to') || '';
-let nama = rawNama.trim() === '' ? 'Tamu Undangan' : rawNama.replace(/-/g, ' ');
+// Ambil teks setelah "to=" sampai akhir (biar gak kepecah gara2 '&')
+let rawNama = '';
+if (query.includes('to=')) {
+  rawNama = query.split('to=')[1]; // ambil dari 'to=' sampai akhir
+}
+
+// Decode URL encoding (kalau ada)
+try {
+  rawNama = decodeURIComponent(rawNama);
+} catch (e) {
+  // kalau decode error (jarang banget), biarin raw aja
+}
+
+// Bersihkan karakter tak penting
+rawNama = rawNama.trim().replace(/-/g, ' ');
+
+// Fallback nama default
+let nama = rawNama === '' ? 'Tamu Undangan' : rawNama;
+
+// Tampilkan ke elemen HTML
 document.getElementById('nama-tamu').innerText = nama;
+
+
 
 function pad(n){ return String(n).padStart(2,'0'); }
 
