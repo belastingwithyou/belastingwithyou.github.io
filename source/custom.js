@@ -52,7 +52,7 @@ function pad(n){ return String(n).padStart(2,'0'); }
       elMins.textContent  = "00";
       elSecs.textContent  = "00";
       elLabel.textContent = "Acara sedang berlangsung atau telah selesai.";
-      clearInterval(cdTimer); // stop timer biar ga minus
+      // clearInterval(cdTimer); // stop timer biar ga minus
       return;
     }
 
